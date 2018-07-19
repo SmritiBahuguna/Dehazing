@@ -1,0 +1,28 @@
+clear all;
+dataDir = '/home/multimedia/Downloads/Test_Im/Category A';
+outDir = '/home/multimedia/Downloads/Test_Im/Dehazed/Category A';
+
+
+f_lst = [];
+f_lst = [f_lst; dir(fullfile(dataDir, '*.jpg'))];
+
+for f_iter = 1:numel(f_lst)
+%         disp(f_iter);
+        f_info = f_lst(f_iter);
+        if f_info.name == '.'
+            continue;
+        end
+        f_path = fullfile(dataDir,f_info.name);
+        haze = im2double(imread(f_path));
+        dehaze = run_cnn(haze);
+%         imshow(dehaze);
+        o_file = fullfile(outDir,f_info.name);
+        imwrite(dehaze,o_file,'jpg');
+
+end
+
+
+% filename = '/home/multimedia/Downloads/Test_Im/All/defcol1.jpg';
+% [filepath,name,ext] = fileparts(filename);
+% haze = im2double(imread(filename));
+% imshow(dehaze);
